@@ -1,3 +1,4 @@
+
 import streamlit as st
 import numpy as np
 import pandas as pd
@@ -33,7 +34,8 @@ with tab1:
         min_value=min_age,
         max_value=max_age,
         value=(min_age, max_age),
-        step=1
+        step=1,
+
     )
     
    #Initially used slider to select an age, but later, wanted to make it a range, I tried to change it to a range but did not work, got help from Gen AI: I want to select age range than an age?
@@ -42,7 +44,7 @@ with tab1:
     sex= st.sidebar.multiselect("Select sex:", options=df["sex"].unique(), default=df["sex"].unique())
 
     # State filter
-    states = st.sidebar.multiselect("Select Growth collection states:", options=df_w["set_states"].unique(), default=["Michigan", "Oregon"])
+    states = st.sidebar.multiselect("Select Growth collection states:", options=df_w["set_states"].unique(), default=["Michigan", "Oregon","Massachusetts"])
 
 
     # Filter the data
@@ -64,15 +66,25 @@ with tab1:
     st.plotly_chart(fig1, use_container_width=True)
 
     
-    st.subheader("Mandibular Inter Canine Width  vs Age")
-    fig2 = px.scatter(filtered_df_w, x="Age", y="LC-C / L3-3", color="sex",
-        hover_name="set_states", #want to control min and max age using slider
-        )
+    # First, create a unique subject identifier
+    filtered_df_w['ID:'] = filtered_df_w['ID:'].astype(str)
+
+
+    # plot  Timepoint vs UC-C / U3-3 with lines per subject
+    filtered_df_w_fig2 = df_w[df_w["sex"].isin(sex)]
+    
+    fig2 = px.line(
+        filtered_df_w,
+        x="Timepoint",
+        y="UC-C / U3-3",
+        color="ID:",           # one line per subject
+        markers=True,
+        labels={"UC-C / U3-3": "Maxillary Intercanine Width", "Timepoint": "Timepoint"}
+    )
+
+    st.subheader("Maxillary Intercanine Width vs Timepoint by Subject")
     st.plotly_chart(fig2, use_container_width=True)
-    st.subheader("Class vs Timepoint")
-        
-    df_filtered = df[df['Timepoint'].isin(['T2', 'T3'])]
-    class_counts = df_filtered.groupby(['Timepoint', 'class_cat']).size().reset_index(name='Count')
+
 
 
     st.subheader("Classification vs Timepoint")
@@ -94,19 +106,6 @@ with tab1:
     st.plotly_chart(fig3, use_container_width=True)
 
 
-    df_filtered['Subject_Side'] = df_filtered['Subject_ID'].astype(str) + "_" + df_filtered['Side']
-    
-    fig4 = px.line(
-    df_filtered,
-    x='Timepoint',
-    y='class_cat',
-    color='Subject_Side',
-    markers=True,
-    labels={'class_cat': 'Classification', 'Timepoint': 'Timepoint'},
-    )
-
-    st.subheader("Classification Change Over Time per Subject on Each Side")
-    st.plotly_chart(fig4, use_container_width=True)
 
 
         
@@ -193,4 +192,6 @@ with tab2:
 
     st.subheader("Predicted Probability of Class II at T3:")
     st.metric(label="Probability", value=f"{prob*100:.2f}%")
+
+
 
