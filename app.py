@@ -56,31 +56,57 @@ with tab1:
         (df_w["Age"] <= age_range[1]) & (df_w["set_states"].isin(states))&
         (df_w["sex"].isin(sex))]
 
-
  
-    st.subheader("Inter Canine Width vs Age")
+    st.subheader("Maxillary Inter Canine Width vs Age")
     fig1 = px.scatter(filtered_df_w, x="Age", y="UC-C / U3-3", color="sex",
         hover_name="set_states", #want to control min and max age using slider
         )
     st.plotly_chart(fig1, use_container_width=True)
 
-
+    
+    st.subheader("Mandibular Inter Canine Width  vs Age")
+    fig2 = px.scatter(filtered_df_w, x="Age", y="LC-C / L3-3", color="sex",
+        hover_name="set_states", #want to control min and max age using slider
+        )
+    st.plotly_chart(fig2, use_container_width=True)
     st.subheader("Class vs Timepoint")
         
     df_filtered = df[df['Timepoint'].isin(['T2', 'T3'])]
     class_counts = df_filtered.groupby(['Timepoint', 'class_cat']).size().reset_index(name='Count')
+
+
+    st.subheader("Classification vs Timepoint")
         
-    fig = px.bar(
+    df_filtered = df[df['Timepoint'].isin(['T2', 'T3'])]
+    class_counts = df_filtered.groupby(['Timepoint', 'class_cat']).size().reset_index(name='Count')
+    
+        
+    fig3 = px.bar(
     class_counts,
     x='class_cat',
     y='Count',
     color='Timepoint',
     barmode='group',
-    labels={'class_cat': 'Class', 'Count': 'Number of Subjects'},
-    #title="Class vs Timepoint (Grouped)"
+    labels={'class_cat': 'Classification', 'Count': 'Number of Subjects'},
+    #title="Classification vs Timepoint (Grouped)"
     )
 
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig3, use_container_width=True)
+
+
+    df_filtered['Subject_Side'] = df_filtered['Subject_ID'].astype(str) + "_" + df_filtered['Side']
+    
+    fig4 = px.line(
+    df_filtered,
+    x='Timepoint',
+    y='class_cat',
+    color='Subject_Side',
+    markers=True,
+    labels={'class_cat': 'Classification', 'Timepoint': 'Timepoint'},
+    )
+
+    st.subheader("Classification Change Over Time per Subject on Each Side")
+    st.plotly_chart(fig4, use_container_width=True)
 
 
         
