@@ -83,6 +83,7 @@ with tab1:
     )
 
     st.subheader("Maxillary Intercanine Width vs Timepoint by Subject")
+    st.write("Humans develop two sets of teeth during their lives: a primary set and a permanent set. T1 represents primary dentition, T2 represents mixed dentition, when the subject have both primary teeth and permanent teeth, T3 represents permanent dentition")
     st.plotly_chart(fig2, use_container_width=True)
 
 
