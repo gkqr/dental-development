@@ -59,7 +59,7 @@ with tab1:
         (df_w["sex"].isin(sex))]
 
  
-    st.subheader("Maxillary Inter Canine Width vs Age")
+    st.subheader("Maxillary Intercanine Width vs Age")
     fig1 = px.scatter(filtered_df_w, x="Age", y="UC-C / U3-3", color="sex",
         hover_name="set_states", #want to control min and max age using slider
         )
