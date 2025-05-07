@@ -19,7 +19,7 @@ with tab1:
 
 #st.write("This is an app to display data and charts regarding dental development.")
 #
-#tab2: st.write("Many kids with Class II occlusion transition to Class I occlusion, which is thought to be more ideal, with growth and development. However, some of them still remain Class II occlusion in adult dentition. This app provides possibility of maintained Class II occlusion in adult dentition")
+#tab2: st.write("Many kids with Class II occlusion transition to Class I occlusion, which is thought to be more ideal, with growth and development. However, some of them still remain Class II occlusion in permanent dentition. This app provides possibility of maintained Class II occlusion in permanent dentition.")
 
 
     # Sidebar
@@ -83,7 +83,7 @@ with tab1:
     )
 
     st.subheader("Maxillary Intercanine Width vs Timepoint by Subject")
-    st.write("Humans develop two sets of teeth during their lives: a primary set and a permanent set. T1 represents primary dentition, T2 represents mixed dentition, when the subject have both primary teeth and permanent teeth, T3 represents permanent dentition")
+    st.write("Humans develop two sets of teeth during their lives: a primary set and a permanent set. T1 represents primary dentition, T2 represents mixed dentition, when the subject have both primary teeth and permanent teeth, T3 represents permanent dentition.")
     st.plotly_chart(fig2, use_container_width=True)
 
 
@@ -122,7 +122,7 @@ with st.expander("See raw data"):
 
 with tab2:
     st.title("Class II Occlusion Prediciton")
-    st.write("Many kids with Class II occlusion transition to Class I occlusion, which is thought to be more ideal, with growth and development. However, some of them still remain Class II occlusion in adult dentition. This app provides possibility of maintained Class II occlusion in adult dentition")
+    st.write("Many kids with Class II occlusion at mixed dentition transition to Class I occlusion, which is thought to be more ideal, with growth and development. However, some of them still remain Class II occlusion in permanent dentition. This app provides possibility of maintained Class II occlusion in permanent dentition.")
 
     #We wanted to have a prediction (classifier) based on logistic regression coefficients - had coefficients already from other research project.
     #To present possibility values based on the coefficients and inout values, we needed help from Gen AI
